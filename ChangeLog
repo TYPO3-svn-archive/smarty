@@ -1,0 +1,18 @@
+08-01-07
+
+	* BUGFIX: static typoscript directory missing from extension
+	* CHANGED: Moved static typoscript to ext_typoscript_setup.txt
+	* BUGFIX: Fixed debug library, tpl and function to avoid recursion
+	* BUGFIX: Minor problem wirh prefilter 'dots' (regex still needs to be improved) 
+	* BUGFIX: Minor changes to various Smarty plugins re. error triggerering
+
+07-10-09 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
+
+	* Complete rewrite of the extension
+	* Added integration with the pi_base scenario as well as the lib/div scenario
+	* Cleaned up the custom plugins
+	* Added a debug console
+
+06-05-01 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
+
+	* Initial release

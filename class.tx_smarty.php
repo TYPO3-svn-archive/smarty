@@ -84,6 +84,12 @@ class tx_smarty {
 		 }
 
 		/****
+		 * Check for valid compile and cache dir
+		 ****/
+		 if (!tx_smarty::_checkDir($smarty->compile_dir)) tx_smarty::_shootMe($smarty->compile_dir, 'the Smarty compile directory in');
+		 if (!tx_smarty::_checkDir($smarty->cache_dir)) tx_smarty::_shootMe($smarty->cache_dir, 'the Smarty cache directory in');
+
+		/****
 		 * Save extension infos for debug console
 		 ****/
 
@@ -138,9 +144,17 @@ class tx_smarty {
 			if(@file_exists($smarty_dir.'Smarty.class.php')) {
 				define('SMARTY_DIR',$smarty_dir);
 			} else {
-				die('Sorry, but I can\'t find Smarty in:<br /><span style="color:red;">'.$smarty_dir.'</span><br />Please check your configuration and try again.');
+				tx_smarty::_shootMe($smarty_dir, 'the Smarty library in');
 			}
 		}
+	}
+
+	function _shootMe($varValue, $varDescription) {
+	    die('Sorry, but I can\'t find '.$varDescription.': <br /><span style="color:red;">'.$varValue.'</span><br />. Please check your configuration and try again.');
+	}
+
+	function _checkDir($dir) {
+	    return t3lib_div::getFileAbsFileName($dir,0);
 	}
 
 }

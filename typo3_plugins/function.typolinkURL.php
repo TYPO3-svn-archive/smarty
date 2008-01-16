@@ -65,7 +65,7 @@
 	function smarty_function_typolinkURL($params, &$smarty) {
 		// Call typolink with option 'returnLast
 		if($funcName = $smarty->getAndLoadPlugin('block','typolink')) {
-			$params['returnLast'] = 'URL';
+			$params['returnLast'] = 'url';
 			return $funcName($params, '', $smarty);
 		}
 	}

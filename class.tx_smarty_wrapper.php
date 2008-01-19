@@ -147,7 +147,7 @@ class tx_smarty_wrapper extends Smarty {
 			} elseif(is_subclass_of($param,'tx_lib_object')) { // ...or lib/div mvc scenario
 				$this->t3_languageFile = $param->controller->configurations->get('pathToLanguageFile');
 			}
-		} elseif($langFile = t3lib_div::getFileAbsName($param) && @is_file($langFile)) {
+		} elseif($langFile = t3lib_div::getFileAbsFileName($param) && @is_file($langFile)) {
 			$this->t3_languageFile = $langFile;
 		}
 	}

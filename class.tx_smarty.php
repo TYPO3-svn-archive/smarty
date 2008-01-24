@@ -78,9 +78,11 @@ class tx_smarty {
 		 // Set the Smarty class vars in the order defined above
 		 foreach($smarty->t3_confVars as $arr) {
 		 	 if($arr['pathToTemplateDirectory']) $arr['template_dir'] = ($arr['pathToTemplateDirectory']); // pathToTemplateDirectory is an alias for template_dir
-			 foreach($arr as $var => $value) {
-				$smarty->setSmartyVar($var,$value);
-			 }
+		 	 if(is_array($arr)) {
+				 foreach($arr as $var => $value) {
+					$smarty->setSmartyVar($var,$value);
+				 }
+		 	 }
 		 }
 
 		/****

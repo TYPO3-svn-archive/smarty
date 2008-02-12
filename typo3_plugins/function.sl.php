@@ -33,15 +33,15 @@
 
 /**
  *
- * Smarty plugin "l10n"
+ * Smarty plugin "sl"
  * -------------------------------------------------------------
- * File:    function.l10n.php
+ * File:    function.sL.php
  * Type:    function
  * Name:    Translate
  * Version: 1.0
  * Author:	Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
  * Purpose: Translate a block of text from the current TYPO3 language library (e.g. locallang.xml)
- * Example: {l10n label="enter_name"}
+ * Example: {sl label="enter_name"}
  * Note:	The parameter 'label' refers to the label xml file. If you do not provide a key
  * 			the content between the tags will be used as the key.
  * Note:	The 'alt' parameter enables you to provide an alternative text if no translation was found.
@@ -52,7 +52,7 @@
  **/
 
 
-	function smarty_function_l10n($params, &$smarty) {
+	function smarty_function_sl($params, &$smarty) {
 		if($funcName = $smarty->getAndLoadPlugin('block','LLL')) {
 			return $funcName($params, '', $smarty);
 		} else {

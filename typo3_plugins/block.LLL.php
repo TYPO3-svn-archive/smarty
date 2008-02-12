@@ -38,7 +38,7 @@
  * File:    block.LLL.php
  * Type:    block
  * Name:    Translate Text
- * Version: 1.0
+ * Version: 1.1
  * Author:  Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
  * Purpose: Translate a block of text from the current TYPO3 language library (e.g. locallang.xml)
  * Example: {LLL alt="Please enter your name" label="enter_name"}Your name{/LLL}
@@ -60,15 +60,21 @@
 		// Key for looking up the translation in the language file
 		$key = ($params['label'])?$params['label']:$content;
 
+		// Exit if no key was provided
+		if(!$key) return;
+
 		// Get the language file and/or label information from the key
-		$parts = t3lib_div::trimExplode(':',$key,1);
-		$parts = t3lib_div::removeArrayEntryByValue($parts,'LLL');
-		$label = array_pop($parts);
-		$language_file = implode(':',$parts);
+		if(!strcmp(strtoupper(substr($key, 0, 4)),'LLL:')) {
+		    $key = substr($key, 4);
+		}
+		if($parts = t3lib_div::trimExplode(':', $key, 1)) {
+			$key = array_pop($parts);
+			$language_file = implode(':',$parts);
+		}
 		$language_file = ($language_file)?$language_file:$smarty->t3_languageFile;
 
 		// Call the sL method from tslib_fe to translate the label
-		$translation = $GLOBALS['TSFE']->sL('LLL:'.$language_file.':'.$label);
+		$translation = $GLOBALS['TSFE']->sL('LLL:'.$language_file.':'.$key);
 
 		// Exit if no translation was found
 		if(!$translation) {

@@ -33,15 +33,15 @@
 
 /**
  *
- * Smarty plugin "translate"
+ * Smarty plugin "LLL"
  * -------------------------------------------------------------
- * File:    block.translate.php
- * Type:    block
+ * File:    function.LLL.php
+ * Type:    function
  * Name:    Translate
- * Version: 2.0
- * Author:  Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
+ * Version: 1.0
+ * Author:	Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
  * Purpose: Translate a block of text from the current TYPO3 language library (e.g. locallang.xml)
- * Example: {translate alt="Please enter your name" label="enter_name"}Your name{/translate}
+ * Example: {LLL alt="Please enter your name" label="enter_name"}
  * Note:	The Smarty "translate" tag is an alias for the "LLL" tag
  * Note:	The parameter 'label' refers to the label xml file. If you do not provide a key
  * 			the content between the tags will be used as the key.
@@ -53,11 +53,11 @@
  **/
 
 
-	function smarty_block_translate($params, $content, &$smarty) {
+	function smarty_function_l10n($params, &$smarty) {
 		if($funcName = $smarty->getAndLoadPlugin('block','LLL')) {
-			return $funcName($params, $content, $smarty);
+			return $funcName($params, '', $smarty);
 		} else {
-			return ($params['alt'])?$params['alt']:$content;
+			return ($params['alt'])?$params['alt']:'';
 		}
 	}
 

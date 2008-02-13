@@ -146,7 +146,15 @@ class tx_smarty {
 			if(@file_exists($smarty_dir.'Smarty.class.php')) {
 				define('SMARTY_DIR',$smarty_dir);
 			} else {
-				tx_smarty::_shootMe($smarty_dir, 'the Smarty library in');
+				die(
+					'<div style="background-color: #fdff5e; border: 2px solid #f00; padding: 5px; width: 640px; font: 14px sans-serif;">
+						<p style="font-weight: bold; text-decoration: underline;">Missing Smarty Library</p>
+						<p>Cannot find a valid Smarty installation in:<br /><span style="font-weight:bold;">'.$smarty_dir.'</span></p><p>
+						If you have upgraded the smarty extension, please make sure that you changed the "Path to your Smarty installation"
+						in the Extension Manager:</p>
+						<img src="typo3conf/ext/smarty/debug/upgrade_notice.gif" width="611" height="363">
+					</div>'
+				);
 			}
 		}
 	}

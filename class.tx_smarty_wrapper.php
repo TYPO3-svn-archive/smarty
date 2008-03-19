@@ -102,7 +102,7 @@ class tx_smarty_wrapper extends Smarty {
 		$smartyVar = preg_replace('/\.?$/m', '', trim(strtolower($smartyVar)));
 		if (!in_array($smartyVar,array_keys($this->t3_smartyVars))) return false; // Exit if no corresponding Smarty class variable exists
 		if(is_array($this->{$smartyVar}) || is_array($smartyValue)) {
-			$smartyValue = (is_array($smartyValue))?t3lib_div::removeDotsFromTS($smartyValue):t3lib_div::trimExplode(',',$smartyValue,1);
+			$smartyValue = (is_array($smartyValue))?tx_smarty_div::removeDotsFromTS($smartyValue):t3lib_div::trimExplode(',',$smartyValue,1);
 			$smartyValue = array_map(array('tx_smarty_div','booleanize'),$smartyValue);
 			if($this->t3_smartyVars[$smartyVar]) {
 				$smartyValue = array_map(array('tx_smarty_div','getFileAbsName'),$smartyValue);
@@ -216,8 +216,6 @@ class tx_smarty_wrapper extends Smarty {
         }
         return $_return;
     }
-
-
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/smarty/class.tx_smarty_wrapper.php'])	{

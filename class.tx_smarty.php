@@ -54,7 +54,7 @@ class tx_smarty {
 		/****
 		 * Get the Smarty class vars. Smarty class vars are acquired (in order of priority) from:
 		 * 1. Plugin configuration array in TYPO3_CONF_VARS (default template_dir)
-		 * 2. TypoScript for the Smarty extension (if loaded) in smarty/static/setup.txt
+		 * 2. Default TypoScript for the Smarty extension in smarty/ext_typoscript_setup.txt
 		 * 3. Any TypoScript for smarty from the calling class, e.g. plugin.myPlugin.smarty.template_dir = ...
 		 *    Both pi_base and lib/div scenario are checked for TypoScript, in the lib/div scenario the default
 		 *    path to the templates directory is inherited.
@@ -69,7 +69,7 @@ class tx_smarty {
 			 $smarty->t3_confVars['lib/div']['template_dir'] = $this->getPathToTemplateDirectory(); // Defined path to templates from lib/div
 			 $smarty->t3_confVars[$this->getExtensionPrefix()] = $this->controller->configurations->get('smarty.'); // Smarty configuration from the calling extension
 		 }
-		 $smarty->t3_confVars['local'] = $localConf;
+		 if(is_array($localConf) && count($localConf)) $smarty->t3_confVars['local'] = $localConf;
 
 		/****
 		 * Set Smarty class vars
@@ -88,8 +88,12 @@ class tx_smarty {
 		/****
 		 * Check for valid compile and cache dir
 		 ****/
-		 if (!tx_smarty::_checkDir($smarty->compile_dir)) tx_smarty::_shootMe($smarty->compile_dir, 'the Smarty compile directory in');
-		 if (!tx_smarty::_checkDir($smarty->cache_dir)) tx_smarty::_shootMe($smarty->cache_dir, 'the Smarty cache directory in');
+		 if (!tx_smarty::_checkDir($smarty->compile_dir)) {
+		     die('Sorry, but I can\'t find the Smarty compile directory in: <br /><span style="color:red;">'.$smarty->compile_dir.'</span><br />. Please check your configuration and try again.');
+		 }
+		 if (!tx_smarty::_checkDir($smarty->cache_dir)) {
+		     die('Sorry, but I can\'t find the Smarty cache directory in: <br /><span style="color:red;">'.$smarty->cache_dir.'</span><br />. Please check your configuration and try again.');
+		 }
 
 		/****
 		 * Save extension infos for debug console
@@ -157,10 +161,6 @@ class tx_smarty {
 				);
 			}
 		}
-	}
-
-	function _shootMe($varValue, $varDescription) {
-	    die('Sorry, but I can\'t find '.$varDescription.': <br /><span style="color:red;">'.$varValue.'</span><br />. Please check your configuration and try again.');
 	}
 
 	function _checkDir($dir) {

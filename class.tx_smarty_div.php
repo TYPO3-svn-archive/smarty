@@ -133,7 +133,29 @@ class tx_smarty_div {
 	function getFileAbsName($filename) {
 		return ($location = t3lib_div::getFileAbsFileName($filename,0))?preg_replace('%([\\\\|/]*$)%', '', $location):$filename;
 	}
-
+	
+	/**
+	 * Note: This function is required but not available in earlier TYPO3 versions
+	 * Removes dots "." from end of a key identifier of TypoScript styled array.
+	 * array('key.' => array('property.' => 'value')) --> array('key' => array('property' => 'value'))
+	 *
+	 * @param	array	$ts: TypoScript configuration array
+	 * @return	array	TypoScript configuration array without dots at the end of all keys
+	 */
+	function removeDotsFromTS($ts) {
+		$out = array();
+		if (is_array($ts)) {
+			foreach ($ts as $key => $value) {
+				if (is_array($value)) {
+					$key = rtrim($key, '.');
+					$out[$key] = tx_smarty_div::removeDotsFromTS($value);
+				} else {
+					$out[$key] = $value;
+				}
+			}
+		}
+		return $out;
+	}
 }
 
 ?>

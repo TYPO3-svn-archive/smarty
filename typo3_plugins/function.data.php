@@ -52,6 +52,12 @@
 
 
 	function smarty_function_data($params, &$smarty) {
+	
+		// Check for a valid FE instance (this plugin cannot be run in the backend)
+		if(!tx_smarty_div::validateTypo3Instance('FE')) {
+			$smarty->trigger_error($smarty->fePluginError);
+			return false;
+		}		
 
 		// Make sure there is a valid instance of tslib_cObj
 		if (!method_exists($smarty->cObj,'getData')) {
@@ -64,7 +70,7 @@
 
 		if ($params['source']){
 			// Return result from getData
-			return $smarty->cObj->getData($params['source']);
+			return $smarty->cObj->getData($params['source'], null);
 		}
 	}
 

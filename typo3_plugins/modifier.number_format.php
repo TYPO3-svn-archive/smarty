@@ -33,41 +33,23 @@
 
 /**
  *
- * Smarty plugin "format"
+ * Smarty plugin "number_format"
  * -------------------------------------------------------------
- * File:    modifier.format.php
+ * File:    modifier.number_format.php
  * Type:    modifier
  * Name:    Format
  * Version: 1.0
  * Author:  Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
- * Purpose: Formats a variable according to lib.parseFunc_RTE
- * Example: {$assignedPHPvariable|format}
- * Note:	For more details on lib.parseFunc_RTE & parseFunc in general see:
- *			http://typo3.org/documentation/document-library/references/doc_core_tsref/4.1.0/view/5/14/
- * Note:	To define an alternate parseFunc configuration set the paramater "parsefunc"
- *			in the tag e.g. {$assignedPHPvariable|format:"lib.myParseFunc"}
+ * Purpose: Format a string as a number using "number_format"
+ * Example: {$number|number_format:2:".":"'"}
  * -------------------------------------------------------------
  *
  **/
 
 
-	function smarty_modifier_format($text, $setup=false) {
-			
-		// Check for a valid FE instance (this plugin cannot be run in the backend)
-		if(!tx_smarty_div::validateTypo3Instance('FE')) {
-			return 'The smarty plugin you are using is only available in the frontend';
-		}
-		
-		// Get an instance of tslib_cobj
-		$cObj = t3lib_div::makeInstance('tslib_cobj');
-
-		if ($setup) {
-			// Process the content with the defined parseFunc configuration
-			return $cObj->parseFunc($text,'','<'.$setup);
-		} else {
-			// Process the content with default RTE parseFunc configuration
-			return $cObj->parseFunc($text,$GLOBALS['TSFE']->tmpl->setup['lib.']['parseFunc_RTE.']);
-		}
-	}
+function smarty_modifier_number_format($string, $decimals = 2, $dec_point = '.', $thousands_sep = '')
+{
+    return number_format($string, $decimals, $dec_point, $thousands_sep);
+}
 
 ?>

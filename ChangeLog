@@ -1,11 +1,20 @@
-16-01-08
+03-07-08 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
+
+	* BUGFIX: compile_dir was not declared as a directory
+	* NEW: Added XCLASS for smartyView (lib extension) which still uses obsolete rtp_smarty extension
+
+19-03-08 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
+
+	* CHANGED: Added backwards compatibility for t3lib_div method removeDotsFromTS
+		
+16-01-08 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
 
 	* BUGFIX: url and typolinkURL functions now pass correct param to typolink function (returnLast value had wrong case)
 	* INFO: Hopefully fixed documentation to render properly in the TER
 	* NEW: Added checks for valid cache and compile directories
 	* CHANGED: Updated documentation
 
-08-01-08
+08-01-08 Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner
 
 	* BUGFIX: static typoscript directory missing from extension
 	* CHANGED: Moved static typoscript to ext_typoscript_setup.txt

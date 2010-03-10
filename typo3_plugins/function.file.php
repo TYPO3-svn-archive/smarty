@@ -33,40 +33,28 @@
 
 /**
  *
- * Smarty plugin "format"
+ * Smarty plugin "file"
  * -------------------------------------------------------------
- * File:    modifier.format.php
- * Type:    modifier
- * Name:    Format
+ * File:    function.file.php
+ * Type:    function
+ * Name:    File reference
  * Version: 1.0
- * Author:  Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
- * Purpose: Formats a variable according to lib.parseFunc_RTE
- * Example: {$assignedPHPvariable|format}
- * Note:	For more details on lib.parseFunc_RTE & parseFunc in general see:
- *			http://typo3.org/documentation/document-library/references/doc_core_tsref/4.1.0/view/5/14/
- * Note:	To define an alternate parseFunc configuration set the paramater "parsefunc"
- *			in the tag e.g. {$assignedPHPvariable|format:"lib.myParseFunc"}
+ * Author:	Simon Tuck <stu@rtpartner.ch>, Rueegg Tuck Partner GmbH
+ * Purpose: Returns a path to a file relative to the site root (i.e. PATH_site)
+ * Example:	{file path="EXT:my_ext/res/my_style.css"}
  * -------------------------------------------------------------
  *
  **/
 
 
-	function smarty_modifier_format($text, $setup=false) {
-			
-		// Check for a valid FE instance (this plugin cannot be run in the backend)
-		if(!tx_smarty_div::validateTypo3Instance('FE')) {
-			return 'The smarty plugin you are using is only available in the frontend';
-		}
-		
-		// Get an instance of tslib_cobj
-		$cObj = t3lib_div::makeInstance('tslib_cobj');
+	function smarty_function_file($params, &$smarty) {
 
-		if ($setup) {
-			// Process the content with the defined parseFunc configuration
-			return $cObj->parseFunc($text,'','<'.$setup);
-		} else {
-			// Process the content with default RTE parseFunc configuration
-			return $cObj->parseFunc($text,$GLOBALS['TSFE']->tmpl->setup['lib.']['parseFunc_RTE.']);
+		// Make sure params are lowercase
+		$params = array_change_key_case($params,CASE_LOWER);
+	
+		// Return path relative to PATH_site
+		if($absPath = t3lib_div::getFileAbsFileName($params['path'])) {
+			return str_replace(PATH_site, '', $absPath);	
 		}
 	}
 
